@@ -1,5 +1,4 @@
 # Ignore environment and secrets
 .env
-vectorstore.pkl
 __pycache__/
 *.pyc
