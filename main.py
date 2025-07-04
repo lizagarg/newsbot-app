@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 
 from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.document_loaders import UnstructuredURLLoader
-from langchain.vectorstores import FAISS
+from langchain_community.document_loaders import UnstructuredURLLoader
+from langchain_community.vectorstores import FAISS
 from langchain_google_genai import GoogleGenerativeAI
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
@@ -68,25 +68,17 @@ if query.strip():
             st.header("🧠 Answer")
             st.subheader(result["answer"])
 
-        from difflib import SequenceMatcher
-
         st.header("🔗 Sources (used in answer)")
 
-        answer_text = result["answer"].lower()
-        used_sources = set()
-
-        # Include source only if the content significantly overlaps with the answer
+        sources = set()
         for doc in result.get("source_documents", []):
-            doc_text = doc.page_content.lower()
-            if SequenceMatcher(None, doc_text, answer_text).ratio() > 0.1:
-                source = doc.metadata.get("source")
-                if source:
-                    used_sources.add(source)
+            source = doc.metadata.get("source")
+            if source:
+                sources.add(source)
 
-        if used_sources:
-            for source in used_sources:
+        if sources:
+            for source in sources:
                 domain = urlparse(source).netloc
                 st.markdown(f"- [{domain}]({source})")
         else:
-            st.markdown("No clearly matching source found.")
-            
+            st.markdown("No sources found.")
