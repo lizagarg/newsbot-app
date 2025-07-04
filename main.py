@@ -8,8 +8,8 @@ from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import UnstructuredURLLoader
 from langchain_community.vectorstores import FAISS
-from langchain_google_genai import GoogleGenerativeAI
 from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 load_dotenv()
 
@@ -55,18 +55,25 @@ if query.strip():
         with open("vectorstore.pkl", "rb") as f:
             vectorstore = pickle.load(f)
 
+        llm = ChatGoogleGenerativeAI(
+            model="gemini-1.5-flash",
+            google_api_key=os.getenv("GOOGLE_API_KEY")
+        )
+
         chain = RetrievalQAWithSourcesChain.from_chain_type(
-            llm=GoogleGenerativeAI(model="gemini-1.5-flash"),
+            llm=llm,
             chain_type="stuff",
             retriever=vectorstore.as_retriever(search_kwargs={"k": 8}),
             return_source_documents=True
         )
 
-        result = chain({"question": query}, return_only_outputs=True)
+        result = chain.invoke({"question": query})  # 👈 use invoke instead of call
 
         if result and "answer" in result:
             st.header("🧠 Answer")
             st.subheader(result["answer"])
+        else:
+            st.warning("⚠️ No answer received. Please try again.")
 
         st.header("🔗 Sources (used in answer)")
 
