@@ -32,7 +32,7 @@ for i in range(3):
 # Sidebar: Buttons
 process_url_clicked = st.sidebar.button("📥 Process URLs")
 st.sidebar.markdown("---")
-# New button for managing the database (New feature, allowed addition)
+# New button for managing the database
 reset_db_clicked = st.sidebar.button("🗑️ Reset Database")
 
 main_placeholder = st.empty()
