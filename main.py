@@ -101,7 +101,7 @@ if process_url_clicked and urls:
 
     for url in urls:
         try:
-            response = requests.get(url, headers=headers, timeout=10)
+            response = requests.get(url, headers=headers, timeout=100)
             response.raise_for_status() # Check for HTTP errors
             
             # Parse HTML
