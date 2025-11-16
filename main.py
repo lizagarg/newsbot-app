@@ -13,6 +13,17 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 
 load_dotenv()
 
+# --- FIX ADDED HERE ---
+# Check for Google API Key in Streamlit Secrets (for Cloud deployment)
+# This will be used if .env file is not present (e.g., in Streamlit Cloud)
+if "GOOGLE_API_KEY" not in os.environ:
+    try:
+        os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+    except (FileNotFoundError, KeyError):
+        # Let the app continue; it will fail later if the key is truly missing
+        pass 
+# --- END OF FIX ---
+
 st.title("📰 News Research App")
 st.sidebar.title("🔍 Enter News Article URLs")
 
