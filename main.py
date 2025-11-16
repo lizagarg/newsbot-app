@@ -57,7 +57,7 @@ if query.strip():
 
         chain = RetrievalQAWithSourcesChain.from_chain_type(
             llm=ChatGoogleGenerativeAI(
-                model="gemini-2.0-flash-lite",
+                model="gemini-2.0-flash",
                 temperature=0.7,
                 google_api_key=st.secrets["GOOGLE_API_KEY"]  # ADD THIS
             ),
