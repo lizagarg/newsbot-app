@@ -70,7 +70,7 @@ if query.strip():
 
         if result and "answer" in result:
             st.header("🧠 Answer")
-            st.write(result["answer"])
+            st.markdown(f"**{result['answer']}**")
 
         st.header("🔗 Sources (used in answer)")
 
