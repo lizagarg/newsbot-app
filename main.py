@@ -59,8 +59,7 @@ if query.strip():
             llm=ChatGoogleGenerativeAI(
                 model="gemini-2.0-flash-lite",
                 temperature=0.7,
-                google_api_key="AIzaSyDmkaoQcE1ydtEcbfSuuntUL9uVMSjP4gI"
-#st.secrets["GOOGLE_API_KEY"]  # ADD THIS
+                google_api_key=st.secrets["GOOGLE_API_KEY"]  # ADD THIS
             ),
             chain_type="stuff",
             retriever=vectorstore.as_retriever(search_kwargs={"k": 8}),
