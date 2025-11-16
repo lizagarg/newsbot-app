@@ -56,7 +56,7 @@ if query.strip():
             vectorstore = pickle.load(f)
 
         chain = RetrievalQAWithSourcesChain.from_chain_type(
-            llm=GoogleGenerativeAI(model="gemini-1.5-flash"),
+            llm=ChatGoogleGenerativeAI(model="gemini-1.5-flash"),
             chain_type="stuff",
             retriever=vectorstore.as_retriever(search_kwargs={"k": 8}),
             return_source_documents=True
