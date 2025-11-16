@@ -70,7 +70,11 @@ if query.strip():
 
         if result and "answer" in result:
             st.header("🧠 Answer")
-            st.markdown(f"**{result['answer']}**")
+            #st.markdown(f"**{result['answer']}**")
+
+            answer_html = result["answer"].replace("\n", "<br>")
+            st.markdown(f'<div style="font-size: 20px; font-weight: bold;">{answer_html}</div>', 
+            unsafe_allow_html=True)
 
         st.header("🔗 Sources (used in answer)")
 
