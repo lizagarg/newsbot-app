@@ -63,7 +63,6 @@ if query.strip():
             ),
             chain_type="stuff",
             retriever=vectorstore.as_retriever(search_kwargs={"k": 8}),
-            return_source_documents=Truever(search_kwargs={"k": 8}),
             return_source_documents=True
         )
 
